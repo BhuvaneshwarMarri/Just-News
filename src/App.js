@@ -6,8 +6,9 @@ function App() {
   let [category, setCategory] = useState("india");
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_NEWSAPI_KEY);
     fetch(
-      `https://newsapi.org/v2/everything?q=${category}&from=2024-07-28&to=2024-07-2&apiKey=a1c31e981d3e4777aeb8ba5d56b3961d`
+      `https://newsapi.org/v2/everything?q=${category}&from=2024-07-28&to=2024-07-2&apiKey=${process.env.REACT_APP_NEWSAPI_KEY}`
     )
       .then((response) => response.json())
       .then((data) => {
