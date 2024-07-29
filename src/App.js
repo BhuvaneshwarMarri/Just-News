@@ -22,7 +22,7 @@ function App() {
   return (
     <div className="App">
       <header className="header">
-        <h1>News App</h1>
+        <h1>Just News</h1>
         <input
           type="text"
           placeholder="search news"
