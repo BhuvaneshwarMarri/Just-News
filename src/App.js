@@ -1,23 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import { useEffect, useState } from "react";
+import Article from "./Article";
 function App() {
+  let [articles, setArticles] = useState([]);
+  let [category, setCategory] = useState("india");
+
+  useEffect(() => {
+    fetch(
+      `https://newsapi.org/v2/everything?q=${category}&from=2024-07-28&to=2024-07-2&apiKey=a1c31e981d3e4777aeb8ba5d56b3961d`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setArticles(data.articles);
+        // console.log(data.articles)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [category]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className="header">
+        <h1>News App</h1>
+        <input
+          type="text"
+          placeholder="search news"
+          onChange={(event) => {
+            if (event.target.value !== "") {
+              setCategory(event.target.value);
+            } else {
+              setCategory("india");
+            }
+          }}
+        />
       </header>
+      <section className="News-Articles">
+        {articles.length !== 0 ? (
+          articles.map((article, index) => {
+            return <Article article={article} key={index} />;
+          })
+        ) : (
+          <h3>No news found for search text!</h3>
+        )}
+      </section>
     </div>
   );
 }
